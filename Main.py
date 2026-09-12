@@ -1,9 +1,14 @@
 from BankAccount import BankAccount
 from AccountRepository import AccountRepository
 from NotificationService import NotificationService
+from StatementGenerator import StatementGenerator
 
 
 def main():
+
+    # ----------------------------------------------------
+    # Create account
+    # ----------------------------------------------------
 
     account = BankAccount(
         101,
@@ -16,11 +21,15 @@ def main():
     # Age corrected to 18
     # Balance corrected to 500
 
+    # ----------------------------------------------------
+    # PIN
+    # ----------------------------------------------------
+
     account.set_pin(1234)
 
-    # -----------------------------
+    # ----------------------------------------------------
     # Account operations
-    # -----------------------------
+    # ----------------------------------------------------
 
     account.deposit(1000)
 
@@ -29,16 +38,16 @@ def main():
     # Wrong PIN, should fail
     account.withdraw(500, 9999)
 
-    # -----------------------------
+    # ----------------------------------------------------
     # Repository
-    # -----------------------------
+    # ----------------------------------------------------
 
     repository = AccountRepository()
     repository.save(account)
 
-    # -----------------------------
+    # ----------------------------------------------------
     # Notification
-    # -----------------------------
+    # ----------------------------------------------------
 
     notification_service = NotificationService()
 
@@ -47,8 +56,19 @@ def main():
         f"updated successfully."
     )
 
-    # Interest is still here for now.
-    # It will be refactored in Section 2.
+    # ----------------------------------------------------
+    # Statement
+    # ----------------------------------------------------
+
+    statement_generator = StatementGenerator()
+
+    statement = statement_generator.generate(account)
+
+    print(statement)
+
+    # ----------------------------------------------------
+    # Interest
+    # ----------------------------------------------------
 
     print(
         "Interest earned: Rs. "
