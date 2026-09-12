@@ -1,7 +1,8 @@
 from BankAccount import BankAccount
+from Withdrawable import Withdrawable
 
 
-class FixedDepositAccount(BankAccount):
+class SavingsAccount(BankAccount, Withdrawable):
 
     def __init__(self, account_number, name, age, balance):
         super().__init__(
@@ -9,5 +10,5 @@ class FixedDepositAccount(BankAccount):
             name,
             age,
             balance,
-            "Fixed Deposit"
+            "Savings"
         )
