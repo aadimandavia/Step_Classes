@@ -2,11 +2,15 @@ from BankAccount import BankAccount
 from AccountRepository import AccountRepository
 from NotificationService import NotificationService
 from StatementGenerator import StatementGenerator
+
 from SavingsInterestPolicy import SavingsInterestPolicy
 from CurrentInterestPolicy import CurrentInterestPolicy
+from SalaryAccount import SalaryAccount
+from SalaryInterestPolicy import SalaryInterestPolicy
 
 
 def main():
+
     account = BankAccount(
         101,
         "Ravi",
@@ -35,24 +39,33 @@ def main():
     statement = statement_generator.generate(account)
     print(statement)
 
-    # Interest calculation now uses a policy
+    # Savings interest
     savings_policy = SavingsInterestPolicy()
-
-    interest = savings_policy.calculate(
-        account.get_balance()
-    )
-
     print(
-        "Interest earned: Rs. "
-        + str(interest)
+        "Savings interest: Rs. "
+        + str(savings_policy.calculate(account.get_balance()))
     )
 
-    # Example of Current account interest policy
+    # Current interest
     current_policy = CurrentInterestPolicy()
+    print(
+        "Current interest on Rs. 10000: Rs. "
+        + str(current_policy.calculate(10000))
+    )
+
+    # New Salary account
+    salary_account = SalaryAccount(
+        102,
+        "Aadi",
+        22,
+        10000
+    )
+
+    salary_policy = SalaryInterestPolicy()
 
     print(
-        "Current account interest on Rs. 10000: Rs. "
-        + str(current_policy.calculate(10000))
+        "Salary interest: Rs. "
+        + str(salary_policy.calculate(salary_account.get_balance()))
     )
 
 
