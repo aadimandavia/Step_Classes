@@ -1,4 +1,8 @@
-class AccountRepository:
+from abc import ABC, abstractmethod
 
+
+class AccountRepository(ABC):
+
+    @abstractmethod
     def save(self, account):
-        print("Saving account to database")
+        pass
