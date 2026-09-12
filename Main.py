@@ -2,14 +2,11 @@ from BankAccount import BankAccount
 from AccountRepository import AccountRepository
 from NotificationService import NotificationService
 from StatementGenerator import StatementGenerator
+from SavingsInterestPolicy import SavingsInterestPolicy
+from CurrentInterestPolicy import CurrentInterestPolicy
 
 
 def main():
-
-    # ----------------------------------------------------
-    # Create account
-    # ----------------------------------------------------
-
     account = BankAccount(
         101,
         "Ravi",
@@ -18,61 +15,44 @@ def main():
         "Savings"
     )
 
-    # Age corrected to 18
-    # Balance corrected to 500
-
-    # ----------------------------------------------------
-    # PIN
-    # ----------------------------------------------------
-
     account.set_pin(1234)
 
-    # ----------------------------------------------------
-    # Account operations
-    # ----------------------------------------------------
-
     account.deposit(1000)
-
     account.withdraw(500, 1234)
 
     # Wrong PIN, should fail
     account.withdraw(500, 9999)
 
-    # ----------------------------------------------------
-    # Repository
-    # ----------------------------------------------------
-
     repository = AccountRepository()
     repository.save(account)
 
-    # ----------------------------------------------------
-    # Notification
-    # ----------------------------------------------------
-
     notification_service = NotificationService()
-
     notification_service.send(
-        f"Account {account.get_account_number()} "
-        f"updated successfully."
+        f"Account {account.get_account_number()} updated successfully."
     )
 
-    # ----------------------------------------------------
-    # Statement
-    # ----------------------------------------------------
-
     statement_generator = StatementGenerator()
-
     statement = statement_generator.generate(account)
-
     print(statement)
 
-    # ----------------------------------------------------
-    # Interest
-    # ----------------------------------------------------
+    # Interest calculation now uses a policy
+    savings_policy = SavingsInterestPolicy()
+
+    interest = savings_policy.calculate(
+        account.get_balance()
+    )
 
     print(
         "Interest earned: Rs. "
-        + str(account.calculate_interest())
+        + str(interest)
+    )
+
+    # Example of Current account interest policy
+    current_policy = CurrentInterestPolicy()
+
+    print(
+        "Current account interest on Rs. 10000: Rs. "
+        + str(current_policy.calculate(10000))
     )
 
 
