@@ -15,3 +15,7 @@ The original design required modifying an existing if/else chain whenever a new 
 ## Section 3.2 — Why LSP Breaks
 
 The LSP is broken because a `Square` cannot always be substituted for a `Rectangle` without changing the expected behavior. A Rectangle allows its width and height to be changed independently, while a Square must keep both dimensions equal. Therefore, code that expects normal Rectangle behavior can produce unexpected results when given a Square.
+
+## Section 4.5 — ISP + DIP Wrap-up
+
+I split the original fat `BankService` interface into smaller capability-based interfaces such as `Depositable`, `Withdrawable`, `Transferable`, and `StatementProvider`. This allows classes like ATM to implement only the operations they actually need. For DIP, I changed `Bank` so that it receives an `AccountRepository` through its constructor instead of creating a concrete repository internally. I also added `FileAccountRepository`, which can be swapped in from `Main.py` without changing `Bank.py`. Compared with the original design, responsibilities are now separated and high-level classes depend on abstractions rather than concrete implementations.
